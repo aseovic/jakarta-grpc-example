@@ -1,39 +1,30 @@
-# Coherence To Do List Example Application
+# Jakarta gRPC To Do List Example Application
 
 ## Overview
-
-### Clients
 
 This example is a simple task management application which allows users to add, complete,
 filter and delete tasks within a list.
 
-The example currently provides four clients to work with tasks:
+### Clients
 
-1. [React](https://reactjs.org/) front-end integrating with one of the server back-end integrated 
-   with Coherence using the `coherence-cdi` and `coherence-mp` modules.
+The example currently provides four JavaFX client implementations:
 
-2. [GraphQL](https://graphql.org/) end-point with optional GraphiQL UI using Helidon Microprofile GraphQL. 
-   See [here](graphql.md) for instructions on how to access the GraphQL endpoint.
+1. Legacy gRPC Java and Protobuf-based client that demonstrates how much overhead and boilerplate code is required in order to implement gRPC clients the "standard" way.
 
-3. [JavaFX](https://openjfx.io/) client connecting as a Coherence Java client 
+2. Helidon gRPC and Protobuf-based client that demonstrates how the above can be simplified even when using Protobuf
 
-4. [Oracle JET](https://www.oracle.com/webfolder/technetwork/jet/index.html) front-end (Optional)
+3. Helidon gRPC and JSON-based client that simplifies things even further by replacing Protobuf with JSON marshalling. 
+
+4. Helidon gRPC and POF-based client that simplifies things even further by replacing Protobuf with POF marshalling.
 
 Any number of the clients can be run and will receive all events from other clients as
-tasks are created, updated, completed or removed. This is achieved using _Server Sent Events_
-(SSE) for the React client and _Coherence Live Events_ for the JavaFX client.
+tasks are created, updated, completed or removed.
 
-### Server Implementations
+### Server Implementation
 
-Three server implementation are provided by the following Maven modules:
+There is only one server implementation, which all the clients connect to and use to manipulate tasks. The tasks themselves are stored in Coherence, but that's largely irrelevant for the purpose of this demo, and is primarily done as a convenience, to avoid the need to set up a separate data store (and to reuse the existing demo code).
 
-- **helidon-server** Provides a [Helidon](https://helidon.io/)-powered server
-- **micronaut-server** Provides a [Micronaut](https://micronaut.io/)-based server
-- **spring-server** Provides a [Spring Boot](https://spring.io/)-based server
-
-### JavaFX Client Implementation
-
-The JavaFX Client Implementation is located under in the **client** Maven module.
+The server exposes four different endpoints, one for each client, which effectively all do the same operations, but use different payload formats for request and response messages.
 
 ## Prerequisites
 
@@ -41,23 +32,30 @@ In order to build and run the examples, you must have the following installed:
 
 * Maven 3.6.3+
 * Java 11+
-* NPM 6.14.4+
-* Node.js 12.16.2+
 
 ## Build + Run Instructions
+                    
+To build everything, simply run
+```bash
+mvn clean install
+```
+in the root directory.
 
-Please see the README for each server implementation for build and run instructions:
+To run the server, execute the following command in the `helidon-server` subdirectory:
+```bash
+mvn exec:exec
+```
 
-- [helidon-server](https://github.com/coherence-community/todo-list-example/tree/master/java/helidon-server)
-- [micronaut-server](https://github.com/coherence-community/todo-list-example/tree/master/java/micronaut-server)
-- [spring-server](https://github.com/coherence-community/todo-list-example/tree/master/java/spring-server)
+To run each of the clients, execute the following command in the corresponding subdirectory:
+```bash
+mvn javafx:run
+```
 
 ## References
 
-* [Coherence Community Edition](https://github.com/oracle/coherence)
-* [Project Helidon](https://helidon.io/)
-* [Coherence Community Home Page](https://coherence.community/)
-* [Oracle JavaScript Extension Toolkit (JET)](https://www.oracle.com/webfolder/technetwork/jet/index.html)
+* [Helidon](https://helidon.io/)
+* [Coherence CE](https://coherence.community/)
+
 
 
 
