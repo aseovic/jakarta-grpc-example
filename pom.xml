@@ -19,6 +19,7 @@
     <module>grpc-proto-client</module>
     <module>helidon-json-client</module>
     <module>helidon-pof-client</module>
+    <module>helidon-proto-client</module>
     <module>helidon-server</module>
   </modules>
 </project>
