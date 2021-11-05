@@ -1,0 +1,73 @@
+/*
+ * Copyright (c) 2020, Oracle and/or its affiliates.
+ *
+ * Licensed under the Universal Permissive License v 1.0 as shown at
+ * http://oss.oracle.com/licenses/upl.
+ */
+
+syntax = "proto3";
+
+package examples.todo;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+option java_multiple_files = true;
+option java_package = "com.seovic.examples.grpc.todo";
+
+// Message types
+//
+message TaskMessage {
+    int64  createdAt = 1;
+    string id = 2;
+    bool   completed = 3;
+    string description = 4;
+}
+
+message UpdateDescriptionRequest {
+    string id = 1;
+    string description = 2;
+}
+
+message UpdateCompletionStatusRequest {
+    string id = 1;
+    bool   completed = 2;
+}
+
+// A ToDoList gRPC service
+//
+service ToDoListService {
+
+    rpc createTask (google.protobuf.StringValue) returns (TaskMessage) {
+    }
+
+    rpc getAllTasks (google.protobuf.Empty) returns (stream TaskMessage) {
+    }
+
+    rpc getTasks (google.protobuf.BoolValue) returns (stream TaskMessage) {
+    }
+
+    rpc findTask (google.protobuf.StringValue) returns (TaskMessage) {
+    }
+
+    rpc deleteTask (google.protobuf.StringValue) returns (TaskMessage) {
+    }
+
+    rpc deleteCompletedTasks (google.protobuf.Empty) returns (google.protobuf.BoolValue) {
+    }
+
+    rpc updateDescription (UpdateDescriptionRequest) returns (TaskMessage) {
+    }
+
+    rpc updateCompletionStatus (UpdateCompletionStatusRequest) returns (TaskMessage) {
+    }
+
+    rpc onInsert (google.protobuf.Empty) returns (stream TaskMessage) {
+    }
+
+    rpc onUpdate (google.protobuf.Empty) returns (stream TaskMessage) {
+    }
+
+    rpc onRemove (google.protobuf.Empty) returns (stream TaskMessage) {
+    }
+}
