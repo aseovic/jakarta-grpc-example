@@ -28,6 +28,7 @@ import javax.inject.Inject;
  * @author Aleks Seovic  2021.11.04
  */
 @Grpc(name = "examples.proto.ToDoList")
+@Logged
 @ApplicationScoped
 public class ToDoListGrpcApiProto
     {

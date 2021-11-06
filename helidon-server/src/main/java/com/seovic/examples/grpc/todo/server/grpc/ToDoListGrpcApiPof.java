@@ -7,6 +7,7 @@ import com.tangosol.io.pof.schema.annotation.Portable;
 import com.tangosol.io.pof.schema.annotation.PortableType;
 import io.grpc.stub.StreamObserver;
 import io.helidon.microprofile.grpc.core.Grpc;
+import io.helidon.microprofile.grpc.core.GrpcInterceptors;
 import io.helidon.microprofile.grpc.core.GrpcMarshaller;
 import io.helidon.microprofile.grpc.core.ServerStreaming;
 import io.helidon.microprofile.grpc.core.Unary;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
  */
 @Grpc(name = "examples.pof.ToDoList")
 @GrpcMarshaller("pof")
+@Logged
 @ApplicationScoped
 public class ToDoListGrpcApiPof
     {
