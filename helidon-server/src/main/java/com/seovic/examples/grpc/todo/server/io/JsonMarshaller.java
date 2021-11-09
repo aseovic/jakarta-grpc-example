@@ -1,14 +1,19 @@
 package com.seovic.examples.grpc.todo.server.io;
 
 import com.google.protobuf.Empty;
+
 import io.grpc.MethodDescriptor.Marshaller;
+
 import io.helidon.grpc.core.MarshallerSupplier;
+
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
@@ -42,7 +47,9 @@ public class JsonMarshaller<T>
 
     public InputStream stream(T obj)
         {
-        return new ByteArrayInputStream(JSONB.toJson(obj).getBytes(StandardCharsets.UTF_8));
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        JSONB.toJson(obj, this.clazz, out);
+        return new ByteArrayInputStream(out.toByteArray());
         }
 
     public T parse(InputStream in)
